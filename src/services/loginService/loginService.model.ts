@@ -1,4 +1,4 @@
-import { createDomain } from 'effector';
+import { createDomain, forward } from 'effector';
 import { CreateUserDto } from '../../api/types';
 import { loginUser } from './loginService.api';
 
@@ -6,24 +6,24 @@ const domain = createDomain(
   'loginService'
 );
 
-const registerUserFx = domain.createEffect<CreateUserDto, void>(loginUser);
+const loginUserFx = domain.createEffect<CreateUserDto, void>(loginUser);
 
 const handleRegisterUser = domain.createEvent<CreateUserDto>();
 
 forward({
    from: handleRegisterUser,
-   to: registerUserFx,
+   to: loginUserFx,
 });
 
-const $isLoading = registerUserFx.pending;
+const $isLoading = loginUserFx.pending;
 
-const handleRegistrationComplete = registerUserFx.doneData;
+const handleLoginComplete = loginUserFx.doneData;
 
 export const loginService = {
   inputs: {
-  
+    handleRegisterUser
   },
   outputs: {
-
+    $isLoading
   },
 };

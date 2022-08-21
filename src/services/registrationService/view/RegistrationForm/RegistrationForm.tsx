@@ -1,9 +1,20 @@
 import React, { FC } from "react";
-import {  Formik } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
-import { ErrorMessage, Form, FormItemWrapper, InputSc, StyledButton, Text1, Text2, TextBlock, Wrapper } from "./RegistrationForm.styled";
+import {
+   ErrorMessage,
+   Form,
+   FormItemWrapper,
+   InputSc,
+   StyledButton,
+   Text1,
+   Text2,
+   TextBlock,
+   Wrapper,
+} from "./RegistrationForm.styled";
 import { RegistrationFormProps } from "./RegistrationForm.types";
 import { CreateUserDto } from "../../../../api/types";
+import { useNavigate } from "react-router-dom";
 
 const validationsSchema = yup.object().shape({
    username: yup.string().required("Required field"),
@@ -17,9 +28,9 @@ const validationsSchema = yup.object().shape({
 
 export const RegistrationForm: FC<RegistrationFormProps> = ({
    handleRegisterUser,
-   setIsRegistered,
    isLoading,
 }) => {
+   const nav = useNavigate();
    return (
       <Wrapper>
          <Formik
@@ -100,7 +111,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = ({
                   </StyledButton>
                   <TextBlock>
                      <Text1> Have account? </Text1>
-                     <Text2 onClick={() => setIsRegistered(true)}>Sign in</Text2>
+                     <Text2 onClick={() => nav("/login")}>Sign in</Text2>
                   </TextBlock>
                </Form>
             )}

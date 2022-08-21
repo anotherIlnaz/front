@@ -1,24 +1,30 @@
-import  { FC } from "react";
-import {  Formik } from "formik";
+import { FC } from "react";
+import { Formik } from "formik";
 import * as yup from "yup";
-import { ErrorMessage, Form, FormItemWrapper, InputSc, StyledButton, Text1, Text2, TextBlock, Wrapper } from "./RegistrationForm.styled";
+import {
+   ErrorMessage,
+   Form,
+   FormItemWrapper,
+   InputSc,
+   StyledButton,
+   Text1,
+   Text2,
+   TextBlock,
+   Wrapper,
+} from "../../../registrationService/view/RegistrationForm/RegistrationForm.styled";
 import { LoginFormProps } from "./LoginForm.types";
 import { useNavigate } from "react-router-dom";
 
 const validationsSchema = yup.object().shape({
    username: yup.string().required("Required field"),
-
    password: yup.string().required("Required field"),
-   
 });
 
 export const LoginForm: FC<LoginFormProps> = ({
-  handleLoginUser
-   setIsRegistered,
+   handleRegisterUser,
    isLoading,
 }) => {
-
-  const nav = useNavigate()
+   const nav = useNavigate();
 
    return (
       <Wrapper>
@@ -28,7 +34,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                password: "",
             }}
             onSubmit={(values) => {
-               handleLoginUser({
+               handleRegisterUser({
                   password: values.password,
                   username: values.username,
                });

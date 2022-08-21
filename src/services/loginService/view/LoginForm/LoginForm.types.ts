@@ -1,3 +1,6 @@
+import { CreateUserDto } from "../../../../api/types";
+
 export type LoginFormProps = {
-   setIsRegistered: (payload: boolean) => void;
+   isLoading:boolean
+   handleRegisterUser:(payload:CreateUserDto) => void
 };
