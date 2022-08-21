@@ -1,14 +1,10 @@
-
-
 export interface CreateUserDto {
-   name: string;
-   email: string;
+   username: string;
    password: string;
-   passwordConfirmation: string;
 }
 
 export interface SignInDto {
-   email: string;
+   username: string;
    password: string;
 }
 
@@ -18,14 +14,12 @@ export interface SignInResponseDto {
 
 export interface UserResponseDto {
    id: string;
-   name: string;
-   email: string;
+   username: string;
    avatar: string;
 }
 
 export interface PatchUserDto {
-   name?: string;
-   email?: string;
-   avatar: string;
+   password?: string;
+   username?: string;
+   avatar?: string;
 }
-
