@@ -1,12 +1,17 @@
 import { createDomain, forward } from 'effector';
-import { CreateUserDto } from '../../api/types';
+import { CreateUserDto, SignInResponseDto } from '../../api/types';
 import { loginUser } from './loginService.api';
 
 const domain = createDomain(
   'loginService'
 );
 
-const loginUserFx = domain.createEffect<CreateUserDto, void>(loginUser);
+const loginUserFx = domain.createEffect<CreateUserDto, SignInResponseDto, Error>(loginUser);
+
+loginUserFx.doneData.watch(({ access }) => {
+  localStorage.setItem("access", access);
+  console.log(access);
+});
 
 const handleRegisterUser = domain.createEvent<CreateUserDto>();
 

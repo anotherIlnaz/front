@@ -1,6 +1,6 @@
 import { axiosInstance } from "../../api/axios";
-import { CreateUserDto } from "../../api/types";
+import { CreateUserDto, SignInResponseDto } from "../../api/types";
 
-export const loginUser = (payload: CreateUserDto): Promise<void> =>
+export const loginUser = (payload: CreateUserDto): Promise<SignInResponseDto> =>
    axiosInstance.post("login", payload);
 

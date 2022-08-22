@@ -1,4 +1,5 @@
 import { createDomain, forward } from "effector";
+import { useNavigate } from "react-router-dom";
 import { CreateUserDto } from "../../api/types";
 import { registerUser } from "./registrationService.api";
 
@@ -16,6 +17,7 @@ forward({
 const $isLoading = registerUserFx.pending;
 
 const handleRegistrationComplete = registerUserFx.doneData;
+
 
 export const registrationService = {
    inputs: {

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC,  } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import {
@@ -13,7 +13,6 @@ import {
    Wrapper,
 } from "./RegistrationForm.styled";
 import { RegistrationFormProps } from "./RegistrationForm.types";
-import { CreateUserDto } from "../../../../api/types";
 import { useNavigate } from "react-router-dom";
 
 const validationsSchema = yup.object().shape({
