@@ -84,9 +84,23 @@ export const Text1 = styled.div`
    color: #9a9a9a;
    font-size: 16px;
    margin-right: 14px;
+
+   user-select: none;
 `
 export const Text2 = styled.div`
    color: #5a7395;
    font-size: 18px;
    text-decoration: underline;
+
+   user-select: none;
+   cursor: pointer;
+   
+   &:hover {
+      opacity: 0.6;
+      color: #ffffff;
+   }
+   &:active{
+      opacity: 1.2;
+      color: #ffffff;
+   }
 `

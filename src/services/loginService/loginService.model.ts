@@ -27,11 +27,20 @@ const $isLoading = loginUserFx.pending;
 const handleLoginComplete = loginUserFx.doneData;
 const handleLogout = domain.event();
 
-$isLogin.on(handleLoginComplete, () => true).reset(handleLogout);
+const setIsLogin = domain.createEvent();
+
+$isLogin
+   .on(handleLoginComplete, () => true)
+   .on(setIsLogin, () => true)
+   .reset(handleLogout);
+const access = localStorage.getItem("access");
+if (access) setIsLogin();
+handleLogout.watch(() => localStorage.clear());
 
 export const loginService = {
    inputs: {
       handleRegisterUser,
+      handleLogout,
    },
    outputs: {
       $isLoading,

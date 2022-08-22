@@ -5,6 +5,8 @@ import { UnAuthorizedLayout } from "./layouts/UnAuthorizedLayout";
 import { MainChatPage } from "./pages/MainChatPage";
 import { LoginContainer, loginService } from "./services/loginService";
 import { RegistrationContainer } from "./services/registrationService";
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 export const App = () => {
    const isLogin = useStore(loginService.outputs.$isLogin);
