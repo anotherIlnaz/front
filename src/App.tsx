@@ -1,13 +1,14 @@
+import { useStore } from "effector-react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthorizedLayout } from "./layouts/AuthorizedLayout";
 import { UnAuthorizedLayout } from "./layouts/UnAuthorizedLayout";
 import { MainChatPage } from "./pages/MainChatPage";
-import { LoginContainer } from "./services/loginService";
+import { LoginContainer, loginService } from "./services/loginService";
 import { RegistrationContainer } from "./services/registrationService";
 
 export const App = () => {
-   // const isLogin = useStore(loginService.outputs.$isLogin);
-   const isLogin = false;
+   const isLogin = useStore(loginService.outputs.$isLogin);
+
    return (
       <>
          <BrowserRouter>
@@ -26,10 +27,7 @@ export const App = () => {
 
                      <Route
                         path="/registration"
-                        element={
-                           <RegistrationContainer
-                           />
-                        }
+                        element={<RegistrationContainer />}
                      />
                      <Route
                         path="*"
