@@ -5,7 +5,7 @@ import { ConversationsList } from "../services/conversationsListService/view/Con
 const Container = styled.div`
    box-sizing: border-box;
    width: 100%;
-   height: 100vh ;
+   height: calc(100vh - 60px) ;
    
 
    background-color: #141414;

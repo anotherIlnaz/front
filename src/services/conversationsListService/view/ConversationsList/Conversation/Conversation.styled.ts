@@ -36,7 +36,9 @@ export const LastMessage = styled.div`
 export const TextBlog = styled.div`
    padding-left: 10px;
    width: 100%;
+   cursor: pointer;
+   user-select: none;
 `;
 export const Date = styled.div`
-        color: #9a9a9a;
-`
+   color: #9a9a9a;
+`;
