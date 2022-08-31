@@ -3,8 +3,8 @@ import { loginService } from "../services/loginService";
 import { useEffect } from "react";
 import { ConversationsListContainer } from "../services/conversationsListService";
 import styled from "styled-components";
-import { useStore } from "effector-react";
-import { chatService } from "../services/chatService";
+import { useParams } from "react-router-dom";
+
 const Container = styled.div`
    box-sizing: border-box;
    width: 100%;
@@ -14,12 +14,14 @@ const Container = styled.div`
    padding-left: 5vw;
    padding-right: 5vw;
 `;
+
 const Grid = styled.div`
    display: flex;
    height: 100%;
    max-height: 100vh;
 `;
-const NonChosenChat = styled.div`
+
+export const NonChosenChat = styled.div`
    font-size: 26px;
    color: #3d3d3d;
    border: 2px solid #333333;
@@ -32,14 +34,17 @@ const NonChosenChat = styled.div`
 `;
 
 export const MainChatPage = () => {
+   const { convId } = useParams<{ convId: string }>();
+
    useEffect(() => loginService.inputs.loadUser(), []);
 
-   const isChosen = useStore(chatService.outputs.$isChosen);
+   const isChosen = Boolean(convId);
+
    return (
       <Container>
          <Grid>
             <ConversationsListContainer />
-            {isChosen ? <Chat /> : <NonChosenChat> Choose chat </NonChosenChat>}
+            <Chat />
          </Grid>
       </Container>
    );

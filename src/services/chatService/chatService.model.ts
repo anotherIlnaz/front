@@ -1,6 +1,5 @@
 import { createDomain, forward } from "effector";
 import { Message } from "../../api/types";
-import { loginService } from "../loginService";
 import { getMessages } from "./chatService.api";
 
 const domain = createDomain("chatService");
@@ -13,11 +12,6 @@ const $messages = domain
    .createStore<Message[]>([])
    .on(fetchMessagesFx.doneData, (_, mes) => mes);
 
-const $isChosen = domain
-   .createStore(false)
-   .on(handleMessages, () => true)
-   .reset(loginService.inputs.handleLogout);
-
 forward({
    from: handleMessages,
    to: fetchMessagesFx,
@@ -25,5 +19,5 @@ forward({
 
 export const chatService = {
    inputs: { handleMessages },
-   outputs: { $messages, $isChosen },
+   outputs: { $messages },
 };

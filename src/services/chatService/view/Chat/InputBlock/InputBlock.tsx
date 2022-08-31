@@ -1,22 +1,20 @@
-import { useEvent } from "effector-react";
 import { FC, useState } from "react";
 import { IoDocumentAttach, IoSendSharp } from "react-icons/io5";
+import { useParams } from "react-router-dom";
 import { Emoji } from "./Emoji";
 import { TextArea, Wrapper } from "./InputBlock.styled";
 import { InputBlockProps } from "./InputBlock.types";
 
 export const InputBlock: FC<InputBlockProps> = ({}) => {
    const [input, setInput] = useState("");
-   
-   // const messageDto = {
-   //    sender:  ,
-   //    text: input,
-   //    conversationId:  ,
-   // }
+   const convId = useParams<{ convId: string }>().convId;
+
+   const messageDto = {
+      text: input,
+      conversationId: convId,
+   };
 
    const takeChosenEmoji = (data: string) => setInput((prev) => prev + data);
-
-   // const handleSubmit = useEvent()
 
    return (
       <Wrapper>
@@ -29,7 +27,6 @@ export const InputBlock: FC<InputBlockProps> = ({}) => {
                size={30}
                color="#8a9795"
                style={{ marginLeft: "6px" }}
-               // onClick={() => handleSubmit(messageDto)}
             />
          ) : (
             <IoDocumentAttach

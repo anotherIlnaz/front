@@ -1,5 +1,4 @@
 import { useStore } from "effector-react";
-import React from "react";
 import { conversationsListService } from "./conversationsListService.model";
 import { ConversationsList } from "./view/ConversationsList";
 

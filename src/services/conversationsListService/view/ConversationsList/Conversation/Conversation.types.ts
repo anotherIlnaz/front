@@ -1,7 +1,9 @@
-import { ConversationResponseDto, UserResponseDto } from "../../../../../api/types";
+import {
+   ConversationResponseDto,
+   UserResponseDto,
+} from "../../../../../api/types";
 
 export type ConversationProps = {
-        convData: ConversationResponseDto
-        userCurrent: UserResponseDto | null
-        setChatOnView: (convId: string) => string
+   convData: ConversationResponseDto;
+   userCurrent: UserResponseDto | null;
 };

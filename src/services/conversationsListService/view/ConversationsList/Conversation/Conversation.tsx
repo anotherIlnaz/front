@@ -9,14 +9,13 @@ import {
 } from "./Conversation.styled";
 import { ConversationProps } from "./Conversation.types";
 import avatar from "../../../../../assets/P90106-150115.jpg";
+import { useNavigate } from "react-router-dom";
 
+export const Conversation: FC<ConversationProps> = ({ convData }) => {
+   const navigate = useNavigate();
 
-export const Conversation: FC<ConversationProps> = ({
-   convData,
-   setChatOnView,
-}) => {
    return (
-      <Wrapper onClick={() => setChatOnView(convData.id)}>
+      <Wrapper onClick={() => navigate(`/chat/${convData.id}`)}>
          <Avatar src={avatar} />
          <TextBlog>
             <Name>
