@@ -1,5 +1,5 @@
 import { useEvent, useStore } from "effector-react";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { NonChosenChat } from "../../../../pages/MainChatPage";
 import { chatService } from "../../chatService.model";
@@ -7,6 +7,9 @@ import { Wrapper } from "./Chat.styled";
 import { ChatProps } from "./Chat.types";
 import { InputBlock } from "./InputBlock";
 import { Message } from "./Message";
+import { io } from "socket.io-client";
+
+;
 
 export const Chat: FC<ChatProps> = ({}) => {
    const { convId } = useParams<{ convId: string }>();
@@ -17,6 +20,7 @@ export const Chat: FC<ChatProps> = ({}) => {
    useEffect(() => {
       if (convId) handleMessages(convId);
    }, [convId]);
+
 
    return convId ? (
       <Wrapper>

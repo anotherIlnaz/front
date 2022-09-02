@@ -1,6 +1,7 @@
 import { createDomain, forward } from "effector";
 import { Message } from "../../api/types";
 import { getMessages } from "./chatService.api";
+import { io } from "socket.io-client"
 
 const domain = createDomain("chatService");
 
@@ -21,3 +22,4 @@ export const chatService = {
    inputs: { handleMessages },
    outputs: { $messages },
 };
+
