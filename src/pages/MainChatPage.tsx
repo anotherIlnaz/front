@@ -3,13 +3,15 @@ import { ConversationsListContainer } from "../services/conversationsListService
 import styled from "styled-components";
 import { useEffect } from "react";
 import { loginService } from "../services/loginService";
+import { socket } from "../services/chatService/chatService.socket";
+import { useStore } from "effector-react";
+import { useParams } from "react-router-dom";
+import { chatService } from "../services/chatService";
 
 const Container = styled.div`
-   box-sizing: border-box;
    width: 100%;
-   height: calc(100vh - 60px);
-
    background-color: #141414;
+
    padding-left: 5vw;
    padding-right: 5vw;
 `;
@@ -17,7 +19,6 @@ const Container = styled.div`
 const Grid = styled.div`
    display: flex;
    height: 100%;
-   max-height: 100vh;
 `;
 
 export const NonChosenChat = styled.div`
@@ -34,6 +35,26 @@ export const NonChosenChat = styled.div`
 
 export const MainChatPage = () => {
    useEffect(() => loginService.inputs.loadUser(), []);
+
+   const userId = useStore(loginService.outputs.$userData)?.id;
+
+   useEffect(() => {
+      socket.emit("addUser", userId);
+      // socket.on("getUsers", (users) => console.log(users));
+   }, [userId]);
+
+   const senderId = userId;
+   const { convId } = useParams<{ convId: string }>();
+   const newMessage = useStore(chatService.outputs.$newMessage);
+
+   socket.emit("sendMessage", {
+      senderId: senderId,
+      convId: newMessage.convId,
+      text: newMessage.text,
+   });
+
+   socket.on("getMessage", (data) => {});
+
    return (
       <Container>
          <Grid>

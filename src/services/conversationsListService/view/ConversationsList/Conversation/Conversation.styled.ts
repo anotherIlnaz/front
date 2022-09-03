@@ -41,4 +41,5 @@ export const TextBlog = styled.div`
 `;
 export const Date = styled.div`
    color: #9a9a9a;
+   font-size: 14px;
 `;

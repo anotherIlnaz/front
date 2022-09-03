@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
    border-radius: 8px;
    padding: 10px;
 
-   height: inherit;
    margin-top: 10px;
    margin-right: 7vh;
 `;

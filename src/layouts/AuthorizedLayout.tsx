@@ -6,11 +6,19 @@ const Wrapper = styled.div`
    overflow: hidden;
 `;
 
+export const PageWrapper = styled.div`
+   display: flex;
+   height: calc(100vh - 60px);
+`;
+
 export const AuthorizedLayout = () => {
    return (
       <Wrapper>
          <NavBar />
-         <Outlet />
+
+         <PageWrapper>
+            <Outlet />
+         </PageWrapper>
       </Wrapper>
    );
 };

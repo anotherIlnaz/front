@@ -10,9 +10,13 @@ import {
 import { ConversationProps } from "./Conversation.types";
 import avatar from "../../../../../assets/P90106-150115.jpg";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
-export const Conversation: FC<ConversationProps> = ({ convData }) => {
+export const Conversation: FC<ConversationProps> = ({ convData,lastMessage }) => {
+   const { updatedAt } = convData;
    const navigate = useNavigate();
+
+   const preparedData = moment(updatedAt).format("DD.MM.YYYY HH:mm");
 
    return (
       <Wrapper onClick={() => navigate(`/chat/${convData.id}`)}>
@@ -20,9 +24,9 @@ export const Conversation: FC<ConversationProps> = ({ convData }) => {
          <TextBlog>
             <Name>
                {convData.companion.username}
-               <Date>{convData.updatedAt.split("T")[1]}</Date>
+               <Date>{preparedData}</Date>
             </Name>
-            <LastMessage>Hi, how are you?</LastMessage>
+            <LastMessage>{lastMessage}</LastMessage>
          </TextBlog>
       </Wrapper>
    );

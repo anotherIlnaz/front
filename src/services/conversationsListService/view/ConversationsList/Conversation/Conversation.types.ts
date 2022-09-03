@@ -6,4 +6,5 @@ import {
 export type ConversationProps = {
    convData: ConversationResponseDto;
    userCurrent: UserResponseDto | null;
+   lastMessage: string;
 };

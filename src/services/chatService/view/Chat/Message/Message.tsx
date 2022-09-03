@@ -7,8 +7,10 @@ import avatar from "../../../../../assets/P90106-150115.jpg";
 
 export const Message: FC<MessageProps> = ({ message }) => {
    return (
-      <Wrapper>
-         <Avatar src={avatar} />
+      <Wrapper id={message.id}>
+         <div>
+            <Avatar src={avatar} />
+         </div>
          <TextBlog>
             <Name>
                {message.sender.username}

@@ -48,3 +48,8 @@ export interface Message {
    text: string;
    updatedAt: string;
 }
+
+export interface MessageDto {
+   text: string;
+   convId: string;
+}

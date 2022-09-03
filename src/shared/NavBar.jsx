@@ -6,7 +6,7 @@ import { loginService } from "../services/loginService";
 import "../shared/forBoostrap.css";
 
 const Container = styled.div`
-   width: inherit;
+   width: 100%;
    height: 60px;
 
    background-color: #222222;

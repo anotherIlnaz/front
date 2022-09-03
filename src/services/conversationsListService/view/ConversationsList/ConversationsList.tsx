@@ -1,5 +1,6 @@
 import { useStore } from "effector-react";
 import { FC, useMemo } from "react";
+import { chatService } from "../../../chatService";
 import { loginService } from "../../../loginService";
 import { conversationsListService } from "../../conversationsListService.model";
 import { Conversation } from "./Conversation/Conversation";
@@ -9,6 +10,9 @@ import { ConversationsListProps } from "./ConversationsList.types";
 const ConvListGate = conversationsListService.gates.ConvListGate;
 
 export const ConversationsList: FC<ConversationsListProps> = ({ convs }) => {
+   const messagesArray = useStore(chatService.outputs.$messages);
+
+   const lastMessage = messagesArray.at(-1)?.text || "";
    const userCurrent = useStore(loginService.outputs.$userData);
    const convsList = useMemo(
       () =>
@@ -17,14 +21,15 @@ export const ConversationsList: FC<ConversationsListProps> = ({ convs }) => {
                userCurrent={userCurrent}
                convData={conv}
                key={conv.id}
+               lastMessage={lastMessage}
             />
          )),
-      [convs]
+      [convs, lastMessage, userCurrent]
    );
 
    return (
       <Wrapper>
-         {userCurrent && <ConvListGate userId={userCurrent?.id} />}
+         {userCurrent && <ConvListGate userId={userCurrent.id} />}
          <SearchSc placeholder="search?" />
          {convsList}
       </Wrapper>

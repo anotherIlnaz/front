@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
    width: 100%;
    height: 70px;
    margin-left: 10px;
+
 `;
 
 export const TextBlog = styled.div`

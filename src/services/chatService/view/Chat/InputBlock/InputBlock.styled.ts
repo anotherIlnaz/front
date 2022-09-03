@@ -36,9 +36,18 @@ export const EmodjiSc = styled.div`
    position: absolute;
    bottom: 2px;
    right: 36px;
+   .emoji-picker-react {
+      box-shadow: none;
+   }
 `;
 
 export const SmileImage = styled.div`
    width: 40px;
    cursor: pointer;
+`;
+
+export const SmileWrapper = styled.div`
+   display: flex;
+   align-items: center;
+   justify-content: end;
 `;
