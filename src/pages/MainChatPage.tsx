@@ -1,9 +1,8 @@
 import { Chat } from "../services/chatService/view/Chat";
-import { loginService } from "../services/loginService";
-import { useEffect } from "react";
 import { ConversationsListContainer } from "../services/conversationsListService";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { loginService } from "../services/loginService";
 
 const Container = styled.div`
    box-sizing: border-box;
@@ -34,12 +33,7 @@ export const NonChosenChat = styled.div`
 `;
 
 export const MainChatPage = () => {
-   const { convId } = useParams<{ convId: string }>();
-
    useEffect(() => loginService.inputs.loadUser(), []);
-
-   const isChosen = Boolean(convId);
-
    return (
       <Container>
          <Grid>

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { format } from "timeago.js";
 import { Avatar } from "../../../../conversationsListService/view/ConversationsList/Conversation/Conversation.styled";
 import { Date, Name, Text, TextBlog, Wrapper } from "./Message.styled";
