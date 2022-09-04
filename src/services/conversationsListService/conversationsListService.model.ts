@@ -24,7 +24,7 @@ const ConvListGate = createGate<{ userId: string }>();
 sample({
    clock: ConvListGate.state,
    fn: (clocksTransmit) => {
-      console.log(clocksTransmit.userId);
+      // console.log(clocksTransmit.userId);
       return clocksTransmit.userId;
    },
    target: getConversationsFx,

@@ -1,12 +1,16 @@
 import { Chat } from "../services/chatService/view/Chat";
-import { ConversationsListContainer } from "../services/conversationsListService";
+import {
+   ConversationsListContainer,
+   conversationsListService,
+} from "../services/conversationsListService";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { loginService } from "../services/loginService";
-import { socket } from "../services/chatService/chatService.socket";
+import { socketInstance } from "../services/chatService/chatService.socket";
 import { useStore } from "effector-react";
 import { useParams } from "react-router-dom";
 import { chatService } from "../services/chatService";
+import { io } from "socket.io-client";
 
 const Container = styled.div`
    width: 100%;
@@ -15,12 +19,10 @@ const Container = styled.div`
    padding-left: 5vw;
    padding-right: 5vw;
 `;
-
 const Grid = styled.div`
    display: flex;
    height: 100%;
 `;
-
 export const NonChosenChat = styled.div`
    font-size: 26px;
    color: #3d3d3d;
@@ -35,25 +37,33 @@ export const NonChosenChat = styled.div`
 
 export const MainChatPage = () => {
    useEffect(() => loginService.inputs.loadUser(), []);
-
    const userId = useStore(loginService.outputs.$userData)?.id;
 
+   const socket = useRef(socketInstance);
+
    useEffect(() => {
-      socket.emit("addUser", userId);
-      // socket.on("getUsers", (users) => console.log(users));
+      userId && socket.current.emit("addUser", userId);
+      socket.current.on("getUsers", (users) => console.log(users));
    }, [userId]);
 
    const senderId = userId;
-   const { convId } = useParams<{ convId: string }>();
    const newMessage = useStore(chatService.outputs.$newMessage);
-
-   socket.emit("sendMessage", {
-      senderId: senderId,
-      convId: newMessage.convId,
-      text: newMessage.text,
-   });
-
-   socket.on("getMessage", (data) => {});
+   const conversatoins = useStore(
+      conversationsListService.outputs.$conversations
+   );
+   const { convId } = useParams<{ convId: string }>();
+   const currentConv = conversatoins.find((conv) => conv.id === convId);
+   currentConv &&
+      socket.current.emit("sendMessage", {
+         senderId: senderId,
+         receiverId: currentConv.companion.id,
+         text: newMessage.text,
+      });
+   useEffect(() => {
+      socket.current.on("getMessage", (data) => {
+         console.log(data);
+      });
+   }, []);
 
    return (
       <Container>
