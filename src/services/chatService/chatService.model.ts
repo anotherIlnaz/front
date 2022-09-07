@@ -1,65 +1,49 @@
-import { combine, createDomain, forward, sample } from "effector";
-import { createGate } from "effector-react";
-import { Message, MessageDto } from "../../api/types";
-import { getMessages, postMessage } from "./chatService.api";
+import { createDomain, forward } from "effector";
+import { ConversationResponseDto, Message } from "../../api/types";
+import { getConvById, getMessages } from "./chatService.api";
 
 const domain = createDomain("chatService");
 
 const fetchMessagesFx = domain.createEffect(getMessages);
-const sendMessageFx = domain.createEffect<MessageDto, Message>(postMessage);
 
-const handleMessages = domain.createEvent<string>();
+const loadMessages = domain.createEvent<string>();
 
-const setMessageText = domain.event<string>();
-const clearMessageText = domain.event();
-const $messageText = domain
-   .store("")
-   .on(setMessageText, (_, text) => text)
-   .reset(clearMessageText);
+const sendMessage = domain.createEvent<string>();
 
-const sendMessage = domain.createEvent();
-const $newMessage = domain
-   .createStore<MessageDto>({ text: "", convId: "" })
-   .on(sendMessage, (_, message) => message);
+const getMessage = domain.createEvent<Message>();
 
-const ConvIdGate = createGate<{ convId: string }>();
+const getConvFx = domain.createEffect(getConvById);
+
+const getConv = domain.createEvent<string>();
+
+const $conv = domain.createStore<ConversationResponseDto | null>(null);
+
+$conv.on(getConvFx.doneData, (_, data) => data);
 
 forward({
-   from: handleMessages,
-   to: fetchMessagesFx,
-});
-
-sample({
-   source: combine($messageText, ConvIdGate.state, (text, { convId }) => ({
-      text,
-      convId,
-   })),
-   clock: sendMessage,
-   target: sendMessageFx,
+   from: getConv,
+   to: getConvFx,
 });
 
 const $messages = domain
    .createStore<Message[]>([])
    .on(fetchMessagesFx.doneData, (_, mes) => mes)
-   .on(sendMessageFx.doneData, (oldMessages, message) => [
-      ...oldMessages,
-      message,
-   ]);
+   .on(getMessage, (prev, data) => [...prev, data]);
 
-sendMessageFx.doneData.watch(() => clearMessageText());
+forward({
+   from: loadMessages,
+   to: fetchMessagesFx,
+});
 
 export const chatService = {
    inputs: {
-      handleMessages,
+      loadMessages,
       sendMessage,
-      setMessageText,
+      getMessage,
+      getConv,
    },
    outputs: {
       $messages,
-      $newMessage,
-      $messageText,
-   },
-   gates: {
-      ConvIdGate,
+      $conv,
    },
 };

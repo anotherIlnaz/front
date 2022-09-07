@@ -6,11 +6,11 @@ import { createDomain, forward, sample } from "effector";
 const domain = createDomain("conversationsListService");
 
 const getConversationsFx = domain.createEffect<
-   string,
+   void,
    ConversationResponseDto[],
    Error
 >(getConversations);
-const handleGetConversations = domain.createEvent<string>();
+const handleGetConversations = domain.createEvent();
 const $conversations = domain.createStore<ConversationResponseDto[]>([]);
 
 forward({
@@ -24,7 +24,6 @@ const ConvListGate = createGate<{ userId: string }>();
 sample({
    clock: ConvListGate.state,
    fn: (clocksTransmit) => {
-      // console.log(clocksTransmit.userId);
       return clocksTransmit.userId;
    },
    target: getConversationsFx,

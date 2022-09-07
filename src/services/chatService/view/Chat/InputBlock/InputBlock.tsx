@@ -14,7 +14,7 @@ export const InputBlock: FC<InputBlockProps> = ({
 }) => {
    const takeChosenEmoji = (data: string) => setMessageText(messageText + data);
 
-   const handleMessage = useEvent(chatService.inputs.handleMessages);
+   const handleMessage = useEvent(chatService.inputs.loadMessages);
    return (
       <Wrapper>
          <TextArea
@@ -29,7 +29,7 @@ export const InputBlock: FC<InputBlockProps> = ({
                size={30}
                color="#8a9795"
                style={{ marginLeft: "6px" }}
-               onClick={sendMessage}
+               onClick={() => sendMessage(messageText)}
             />
          ) : (
             <IoDocumentAttach

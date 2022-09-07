@@ -1,7 +1,5 @@
-import { MessageDto } from "../../../../../api/types";
-
 export type InputBlockProps = {
-   sendMessage: () => void;
+   sendMessage: (text: string) => void;
    messageText: string;
    setMessageText: (message: string) => void;
 };

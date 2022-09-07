@@ -7,30 +7,28 @@ import { ScrollWrapper, Wrapper } from "./Chat.styled";
 import { ChatProps } from "./Chat.types";
 import { InputBlock } from "./InputBlock";
 import { Message } from "./Message";
-import { io } from "socket.io-client";
 
 export const Chat: FC<ChatProps> = ({}) => {
    const { convId } = useParams<{ convId: string }>();
+   const [messageText, setMessageText] = useState("");
 
    const messages = useStore(chatService.outputs.$messages);
-   const messageText = useStore(chatService.outputs.$messageText);
-   const handleMessages = useEvent(chatService.inputs.handleMessages);
+   const loadMessages = useEvent(chatService.inputs.loadMessages);
 
    useEffect(() => {
-      if (convId) handleMessages(convId);
+      if (convId) loadMessages(convId);
    }, [convId]);
 
    const sendMessage = useEvent(chatService.inputs.sendMessage);
-   const setMessageText = useEvent(chatService.inputs.setMessageText);
-
-   const ConvIdGate = chatService.gates.ConvIdGate;
 
    const lastMessageId = messages.at(-1)?.id;
+
    useEffect(() => {
       if (!lastMessageId) {
          return;
       }
       const lastMessageElement = document.getElementById(lastMessageId);
+      
       if (!lastMessageElement) {
          return;
       }
@@ -39,7 +37,6 @@ export const Chat: FC<ChatProps> = ({}) => {
 
    return convId ? (
       <>
-         <ConvIdGate convId={convId} />
          <Wrapper>
             <ScrollWrapper>
                {messages.map((message) => (
@@ -55,6 +52,6 @@ export const Chat: FC<ChatProps> = ({}) => {
          </Wrapper>
       </>
    ) : (
-      <NonChosenChat> Choose chat </NonChosenChat>
+      <NonChosenChat>Choose chat</NonChosenChat>
    );
 };
