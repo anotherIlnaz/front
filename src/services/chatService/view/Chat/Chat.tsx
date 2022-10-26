@@ -9,6 +9,9 @@ import { InputBlock } from "./InputBlock";
 import { Message } from "./Message";
 
 export const Chat: FC<ChatProps> = ({}) => {
+
+   const forChanges = "your"
+
    const { convId } = useParams<{ convId: string }>();
    const [messageText, setMessageText] = useState("");
 
