@@ -35,6 +35,8 @@ export const Chat: FC<ChatProps> = ({}) => {
       lastMessageElement.scrollIntoView();
    }, [messages]);
 
+   const forPullRequest = "pull"
+
    return convId ? (
       <>
          <Wrapper>
